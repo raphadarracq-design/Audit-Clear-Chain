@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paiement confirmé — Audit Supply Chain PME</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2357;
+  --navy-dark: #111840;
+  --gold: #c9a84c;
+  --gold-lt: #e8c97a;
+  --gold-pale: #f5e9c8;
+  --white: #ffffff;
+  --gray: #64748b;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-dark);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+nav {
+  padding: 0 5%; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--white); text-decoration: none; }
+.nav-logo span { color: var(--gold); }
+
+.main {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 60px 5%;
+}
+.card {
+  max-width: 580px; width: 100%; text-align: center;
+  animation: fadeUp 0.6s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.check-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(201,168,76,0.12);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 32px;
+  animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+}
+@keyframes pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.check-circle svg { width: 36px; height: 36px; }
+
+.eyebrow {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1.15; margin-bottom: 16px;
+}
+h1 em { font-style: normal; color: var(--gold); }
+.subtitle {
+  font-size: 17px; color: rgba(255,255,255,0.6);
+  line-height: 1.7; font-weight: 300; margin-bottom: 48px;
+}
+
+.steps {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px; padding: 32px;
+  text-align: left; margin-bottom: 32px;
+}
+.steps-title {
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px; text-align: center;
+}
+.step {
+  display: flex; gap: 16px; align-items: flex-start;
+  margin-bottom: 20px;
+}
+.step:last-child { margin-bottom: 0; }
+.step-num {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500; color: var(--gold);
+  margin-top: 1px;
+}
+.step-content {}
+.step-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+.step-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 6px;
+  font-size: 15px; font-weight: 500; text-decoration: none;
+  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+}
+.btn-gold { background: var(--gold); color: var(--navy-dark); }
+.btn-gold:hover { background: var(--gold-lt); transform: translateY(-1px); }
+
+.info-box {
+  background: rgba(201,168,76,0.06);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 8px; padding: 16px 20px;
+  font-size: 13px; color: rgba(255,255,255,0.5);
+  line-height: 1.6; margin-top: 24px;
+}
+.info-box strong { color: rgba(255,255,255,0.8); }
+
+footer {
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 24px 5%; text-align: center;
+}
+footer p { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://clear-chain.netlify.app" class="nav-logo">Audit<span>Supply</span></a>
+</nav>
+
+<div class="main">
+  <div class="card">
+    <div class="check-circle">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 18L15 25L28 11" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="eyebrow">Paiement confirmé</div>
+    <h1>Bienvenue —<br><em>votre audit démarre</em></h1>
+    <p class="subtitle">Votre paiement a bien été reçu. Vous allez recevoir le questionnaire de diagnostic par email dans les prochaines minutes à l'adresse indiquée lors du paiement.</p>
+
+    <div class="steps">
+      <div class="steps-title">Ce qui se passe maintenant</div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Questionnaire envoyé par email</div>
+          <div class="step-desc">Vous recevez le questionnaire de diagnostic (30 questions, 20 min) à l'adresse indiquée lors du paiement. Vérifiez vos spams si vous ne le voyez pas sous 10 minutes.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Remplissez le questionnaire</div>
+          <div class="step-desc">Répondez avec vos estimations — pas besoin de préparer de documents. Renvoyez-le complété à raphadarracq@gmail.com.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Rapport livré sous 72h ouvrées</div>
+          <div class="step-desc">Dès réception de vos réponses, l'analyse démarre. Vous recevez votre rapport complet sous 72h avec les 5 dysfonctionnements chiffrés et le plan d'action.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Call de présentation planifié</div>
+          <div class="step-desc">Après réception du rapport, vous recevez un lien pour planifier votre call de 45 minutes selon vos disponibilités.</div>
+        </div>
+      </div>
+    </div>
+
+    <a href="mailto:raphadarracq@gmail.com?subject=Question sur mon audit supply chain" class="btn btn-gold">
+      Une question ? Écrivez-moi →
+    </a>
+
+    <div class="info-box">
+      <strong>Pas encore reçu le questionnaire après 15 minutes ?</strong><br>
+      Vérifiez vos spams ou écrivez directement à <strong>raphadarracq@gmail.com</strong> en précisant votre nom et le produit acheté. Je vous renvoie le questionnaire immédiatement.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Raphaël Darracq — Audit Supply Chain PME · L3 Programme Grande École, Kedge Business School<br>
+  raphadarracq@gmail.com · 07 61 76 75 52</p>
+</footer>
+
+</body>
+</html>
