@@ -656,7 +656,7 @@ footer a:hover { color: var(--gold); }
           <li>Garantie de résultats sur objectifs</li>
           <li>Reporting mensuel direction</li>
         </ul>
-        <a href="/cdn-cgi/l/email-protection#7002110018111411020211130130171d11191c5e131f1d" class="offer-btn offer-btn-outline">Demander un devis →</a>
+        <a href="/cdn-cgi/l/email-protection#740615041c1510150606151705341319151d185a171b19" class="offer-btn offer-btn-outline">Demander un devis →</a>
       </div>
     </div>
   </div>
@@ -780,7 +780,7 @@ footer a:hover { color: var(--gold); }
     <p class="section-sub reveal reveal-delay-2">Rejoignez les dirigeants qui ont transformé leur supply chain avec une vision claire de leurs coûts cachés.</p>
     <div class="cta-actions reveal reveal-delay-3">
       <a href="https://buy.stripe.com/7sY5kD6T66O7c7U9yn33W00" class="btn-big btn-big-gold">Démarrer mon audit — 990 € HT →</a>
-      <a href="/cdn-cgi/l/email-protection#136172637b727772616172706253747e727a7f3d707c7e" class="btn-big btn-big-ghost">Poser une question</a>
+      <a href="/cdn-cgi/l/email-protection#d6a4b7a6beb7b2b7a4a4b7b5a796b1bbb7bfbaf8b5b9bb" class="btn-big btn-big-ghost" onclick="event.preventDefault();openQuestion()">Poser une question</a>
     </div>
     <div class="cta-trust reveal reveal-delay-4">
       <span class="cta-trust-item">Garantie remboursement 10×</span>
@@ -791,13 +791,339 @@ footer a:hover { color: var(--gold); }
   </div>
 </section>
 
+<!-- MODAL QUESTION -->
+<div id="question-overlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(17,24,64,0.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeQuestion()">
+  <div id="question-modal" style="background:var(--white);border-radius:12px;width:100%;max-width:480px;overflow:hidden;transform:translateY(24px);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.2,0.64,1);">
+    <!-- Header -->
+    <div style="background:var(--navy-dark);padding:28px 32px 24px;position:relative;">
+      <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Une question ?</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--white);line-height:1.2;">Je vous réponds<br>sous 24h ouvrées</h3>
+      <button onclick="closeQuestion()" style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.6);width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">×</button>
+    </div>
+    <!-- Form -->
+    <div style="padding:28px 32px;" id="question-form-wrap">
+      <div id="question-alert" style="display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:10px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;"></div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label style="display:block;font-size:12px;font-weight:500;color:var(--navy);margin-bottom:6px;">Prénom et nom *</label>
+          <input id="q-nom" type="text" placeholder="Jean Dupont" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);outline:none;transition:border-color 0.2s,box-shadow 0.2s;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)';this.style.boxShadow='0 0 0 3px rgba(201,168,76,0.1)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:500;color:var(--navy);margin-bottom:6px;">Email professionnel *</label>
+          <input id="q-email" type="email" placeholder="jean@entreprise.fr" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);outline:none;transition:border-color 0.2s,box-shadow 0.2s;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)';this.style.boxShadow='0 0 0 3px rgba(201,168,76,0.1)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;font-weight:500;color:var(--navy);margin-bottom:6px;">Votre question *</label>
+          <textarea id="q-message" placeholder="Décrivez votre question ou votre situation..." rows="4" style="width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--navy);outline:none;resize:vertical;transition:border-color 0.2s,box-shadow 0.2s;" onfocus="this.style.borderColor='rgba(201,168,76,0.6)';this.style.boxShadow='0 0 0 3px rgba(201,168,76,0.1)'" onblur="this.style.borderColor='var(--border)';this.style.boxShadow='none'"></textarea>
+        </div>
+        <button onclick="submitQuestion()" id="q-submit" style="background:var(--gold);color:var(--navy-dark);border:none;padding:14px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--gold-lt)'" onmouseout="this.style.background='var(--gold)'">Envoyer ma question →</button>
+      </div>
+    </div>
+    <!-- Success -->
+    <div id="question-success" style="display:none;padding:40px 32px;text-align:center;">
+      <div style="width:64px;height:64px;border-radius:50%;background:var(--navy);border:3px solid var(--gold);color:var(--gold);font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">✓</div>
+      <h4 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:10px;">Message envoyé !</h4>
+      <p style="font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:24px;">Je vous réponds sous 24h ouvrées à l'adresse indiquée.</p>
+      <button onclick="closeQuestion()" style="background:var(--navy);color:var(--white);border:none;padding:12px 32px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;">Fermer</button>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Audit<span>Supply</span></div>
   <p>Audit supply chain PME industrielle — Diagnostic en 72h<br>
-  Raphaël Darracq · <a href="/cdn-cgi/l/email-protection#0173607169606560737360627041666c60686d2f626e6c"><span class="__cf_email__" data-cfemail="8af8ebfae2ebeeebf8f8ebe9fbcaede7ebe3e6a4e9e5e7">[email&#160;protected]</span></a> · 07 61 76 75 52<br>
+  Raphaël Darracq · <a href="/cdn-cgi/l/email-protection#91e3f0e1f9f0f5f0e3e3f0f2e0d1f6fcf0f8fdbff2fefc"><span class="__cf_email__" data-cfemail="bcceddccd4ddd8ddcecedddfcdfcdbd1ddd5d092dfd3d1">[email&#160;protected]</span></a> · 07 61 76 75 52<br>
   <small style="opacity:0.6;"><a href="mentions-legales.html">Mentions légales</a> · <a href="mentions-legales.html">Politique de confidentialité</a> · © 2025</small></p>
 </footer>
+
+<!-- ============================================================
+     CLEAR-CHAIN — Widget Chatbot IA Supply Chain
+     ============================================================ -->
+<style>
+  #cc-toggle {
+    position: fixed; bottom: 28px; right: 28px; z-index: 9998;
+    width: 62px; height: 62px; border-radius: 50%;
+    background: linear-gradient(135deg, #c9a84c, #a8883a);
+    border: none; cursor: pointer;
+    box-shadow: 0 8px 32px rgba(201,168,76,0.45);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .2s ease, box-shadow .2s ease;
+    animation: cc-pulse 3s ease-in-out infinite;
+  }
+  #cc-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.6), 0 0 0 8px rgba(201,168,76,0.12);
+    animation: none;
+  }
+  @keyframes cc-pulse {
+    0%,100% { box-shadow: 0 8px 32px rgba(201,168,76,0.45), 0 0 0 0 rgba(201,168,76,0); }
+    50%      { box-shadow: 0 8px 32px rgba(201,168,76,0.45), 0 0 0 10px rgba(201,168,76,0); }
+  }
+  #cc-toggle svg { width: 26px; height: 26px; transition: opacity .15s, transform .15s; }
+  #cc-toggle .cc-icon-chat  { opacity: 1;  transform: scale(1) rotate(0deg); }
+  #cc-toggle .cc-icon-close { opacity: 0;  transform: scale(0) rotate(90deg); position: absolute; }
+  #cc-toggle.open .cc-icon-chat  { opacity: 0;  transform: scale(0) rotate(-90deg); }
+  #cc-toggle.open .cc-icon-close { opacity: 1;  transform: scale(1) rotate(0deg); }
+  #cc-badge {
+    position: absolute; top: -3px; right: -3px;
+    width: 18px; height: 18px; background: #16a34a;
+    border-radius: 50%; border: 2px solid white;
+    font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700;
+    color: white; display: flex; align-items: center; justify-content: center;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  #cc-badge.hide { transform: scale(0); opacity: 0; }
+
+  #cc-panel {
+    position: fixed; bottom: 104px; right: 28px; z-index: 9999;
+    width: 380px; height: 560px;
+    background: #111840;
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.15);
+    display: flex; flex-direction: column; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.15);
+    opacity: 0; transform: translateY(16px) scale(0.97);
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  #cc-panel.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+
+  .cc-header {
+    background: linear-gradient(135deg, #1a2357 0%, #111840 100%);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 16px 18px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+  }
+  .cc-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(201,168,76,0.15); border: 1.5px solid rgba(201,168,76,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .cc-header-name {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: 14px; color: white; letter-spacing: 0.01em;
+  }
+  .cc-header-status {
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    color: rgba(255,255,255,0.55); display: flex; align-items: center;
+    gap: 5px; margin-top: 2px;
+  }
+  .cc-dot-live {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ADE80; box-shadow: 0 0 6px #4ADE80;
+    animation: cc-blink 2s ease-in-out infinite;
+  }
+  @keyframes cc-blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .cc-header-logo {
+    font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500;
+    color: rgba(201,168,76,0.5); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  .cc-messages {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  .cc-messages::-webkit-scrollbar { width: 4px; }
+  .cc-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+  .cc-msg { display: flex; gap: 8px; animation: cc-fade-in .25s ease; }
+  @keyframes cc-fade-in { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .cc-msg.user { flex-direction: row-reverse; }
+  .cc-msg-avatar {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; margin-top: 2px;
+  }
+  .cc-msg.bot  .cc-msg-avatar { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.25); }
+  .cc-msg.user .cc-msg-avatar { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
+  .cc-bubble {
+    max-width: 78%; padding: 10px 13px; border-radius: 14px;
+    font-family: 'DM Sans', sans-serif; font-size: 13.5px; line-height: 1.55;
+  }
+  .cc-msg.bot  .cc-bubble {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.88); border-bottom-left-radius: 4px;
+  }
+  .cc-msg.user .cc-bubble {
+    background: linear-gradient(135deg, #c9a84c, #a8883a);
+    color: #111840; font-weight: 500; border-bottom-right-radius: 4px;
+  }
+  .cc-typing .cc-bubble { padding: 12px 16px; display: flex; align-items: center; gap: 5px; }
+  .cc-typing .cc-dot-t {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #c9a84c; opacity: 0.4;
+    animation: cc-bounce .9s ease-in-out infinite;
+  }
+  .cc-typing .cc-dot-t:nth-child(2) { animation-delay: .15s; }
+  .cc-typing .cc-dot-t:nth-child(3) { animation-delay: .30s; }
+  @keyframes cc-bounce { 0%,60%,100%{transform:translateY(0);opacity:.4} 30%{transform:translateY(-5px);opacity:1} }
+
+  .cc-suggestions {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 0 16px 10px; flex-shrink: 0;
+  }
+  .cc-sugg {
+    font-family: 'DM Sans', sans-serif; font-size: 11.5px;
+    padding: 5px 10px; border-radius: 20px;
+    border: 1px solid rgba(201,168,76,0.25);
+    background: rgba(201,168,76,0.07); color: #e8c97a;
+    cursor: pointer; transition: background .15s, transform .15s; white-space: nowrap;
+  }
+  .cc-sugg:hover { background: rgba(201,168,76,0.18); transform: translateY(-1px); }
+
+  .cc-input-area {
+    padding: 12px 14px; border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex; gap: 8px; align-items: flex-end; flex-shrink: 0;
+    background: rgba(255,255,255,0.02);
+  }
+  #cc-input {
+    flex: 1; background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+    padding: 9px 13px; font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: white; resize: none; outline: none;
+    min-height: 38px; max-height: 100px; line-height: 1.45;
+    transition: border-color .15s;
+  }
+  #cc-input::placeholder { color: rgba(255,255,255,0.3); }
+  #cc-input:focus { border-color: rgba(201,168,76,0.5); }
+  #cc-send {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: #c9a84c; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background .15s, transform .1s;
+  }
+  #cc-send:hover { background: #e8c97a; transform: scale(1.05); }
+  #cc-send:disabled { background: rgba(255,255,255,0.1); cursor: not-allowed; transform: none; }
+  .cc-footer {
+    text-align: center; padding: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 10px;
+    color: rgba(255,255,255,0.2); letter-spacing: 0.05em; flex-shrink: 0;
+  }
+  @media (max-width: 480px) {
+    #cc-panel { width: calc(100vw - 24px); right: 12px; bottom: 88px; height: 70vh; }
+    #cc-toggle { right: 16px; bottom: 16px; }
+  }
+</style>
+
+<!-- Toggle -->
+<button id="cc-toggle" aria-label="Ouvrir l'assistant supply chain">
+  <span id="cc-badge">1</span>
+  <svg class="cc-icon-chat" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round"
+      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+  </svg>
+  <svg class="cc-icon-close" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+  </svg>
+</button>
+
+<!-- Panel -->
+<div id="cc-panel" role="dialog" aria-label="Assistant supply chain Clear-Chain">
+  <div class="cc-header">
+    <div class="cc-avatar">⚙️</div>
+    <div style="flex:1">
+      <div class="cc-header-name">Assistant Supply Chain</div>
+      <div class="cc-header-status">
+        <span class="cc-dot-live"></span> Disponible maintenant
+      </div>
+    </div>
+    <div class="cc-header-logo">Clear-Chain</div>
+  </div>
+  <div class="cc-messages" id="cc-messages"></div>
+  <div class="cc-suggestions" id="cc-suggestions">
+    <button class="cc-sugg" onclick="ccSend('Comment réduire mes stocks dormants ?')">📦 Stocks dormants</button>
+    <button class="cc-sugg" onclick="ccSend('Comment sécuriser mes fournisseurs ?')">🔗 Risques fournisseurs</button>
+    <button class="cc-sugg" onclick="ccSend('Comment l\'IA peut optimiser ma logistique ?')">🤖 IA & logistique</button>
+    <button class="cc-sugg" onclick="ccSend('Qu\'est-ce que l\'audit Clear-Chain ?')">📋 L\'audit</button>
+  </div>
+  <div class="cc-input-area">
+    <textarea id="cc-input" placeholder="Posez votre question supply chain…" rows="1"></textarea>
+    <button id="cc-send" onclick="ccSendInput()" aria-label="Envoyer">
+      <svg fill="none" viewBox="0 0 24 24" stroke="#111840" stroke-width="2.5" width="16" height="16">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
+  </div>
+  <div class="cc-footer">Propulsé par clear-chain.fr × Claude AI</div>
+</div>
+
+<script>
+(function() {
+  const toggle   = document.getElementById('cc-toggle');
+  const panel    = document.getElementById('cc-panel');
+  const msgs     = document.getElementById('cc-messages');
+  const inp      = document.getElementById('cc-input');
+  const sendBtn  = document.getElementById('cc-send');
+  const badge    = document.getElementById('cc-badge');
+  const suggsEl  = document.getElementById('cc-suggestions');
+  let history = [], isOpen = false, isTyping = false;
+
+  toggle.addEventListener('click', () => {
+    isOpen = !isOpen;
+    toggle.classList.toggle('open', isOpen);
+    panel.classList.toggle('open', isOpen);
+    badge.classList.add('hide');
+    if (isOpen) { if (!history.length) addWelcome(); setTimeout(() => inp.focus(), 300); }
+  });
+
+  function addWelcome() {
+    addBot("Bonjour ! 👋 Je suis l'assistant IA de **Clear-Chain**.\n\nJe peux vous aider à identifier les coûts cachés dans votre supply chain, optimiser vos stocks ou sécuriser vos fournisseurs.\n\nQuelle est votre problématique du moment ?");
+  }
+
+  function addUser(text) {
+    const el = document.createElement('div');
+    el.className = 'cc-msg user';
+    el.innerHTML = `<div class="cc-msg-avatar">👤</div><div class="cc-bubble">${esc(text)}</div>`;
+    msgs.appendChild(el); scroll(); suggsEl.style.display = 'none';
+  }
+
+  function addBot(text) {
+    const el = document.createElement('div');
+    el.className = 'cc-msg bot';
+    el.innerHTML = `<div class="cc-msg-avatar">⚙️</div><div class="cc-bubble">${fmt(text)}</div>`;
+    msgs.appendChild(el); scroll();
+  }
+
+  function showTyping() {
+    const el = document.createElement('div');
+    el.className = 'cc-msg bot cc-typing'; el.id = 'cc-typ';
+    el.innerHTML = `<div class="cc-msg-avatar">⚙️</div><div class="cc-bubble"><span class="cc-dot-t"></span><span class="cc-dot-t"></span><span class="cc-dot-t"></span></div>`;
+    msgs.appendChild(el); scroll();
+  }
+  function removeTyping() { const e = document.getElementById('cc-typ'); if(e) e.remove(); }
+
+  async function send(text) {
+    if (!text.trim() || isTyping) return;
+    isTyping = true; sendBtn.disabled = true;
+    addUser(text); history.push({ role: 'user', content: text });
+    showTyping();
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history })
+      });
+      const data = await res.json();
+      removeTyping();
+      const reply = data.error ? "Désolé, une erreur est survenue. Réessayez dans quelques instants." : data.content;
+      addBot(reply);
+      if (!data.error) history.push({ role: 'assistant', content: data.content });
+    } catch { removeTyping(); addBot("Impossible de me connecter. Vérifiez votre connexion."); }
+    isTyping = false; sendBtn.disabled = false; inp.focus();
+  }
+
+  window.ccSend = send;
+  window.ccSendInput = function() { const t = inp.value.trim(); if(!t) return; inp.value=''; resize(); send(t); };
+  inp.addEventListener('keydown', e => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();window.ccSendInput();} });
+  inp.addEventListener('input', resize);
+  function resize() { inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,100)+'px'; }
+  function scroll() { setTimeout(()=>msgs.scrollTop=msgs.scrollHeight,50); }
+  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function fmt(t) { return esc(t).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>'); }
+})();
+</script>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js" defer></script><script>
 /* ── Nav scroll ── */
@@ -859,6 +1185,67 @@ const statsObs = new IntersectionObserver(([e]) => {
   }
 }, { threshold: 0.5 });
 statsObs.observe(document.querySelector('.stats-bar'));
+
+/* ── Modal Question ── */
+function openQuestion() {
+  const overlay = document.getElementById('question-overlay');
+  const modal = document.getElementById('question-modal');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => {
+    modal.style.transform = 'translateY(0)';
+    modal.style.opacity = '1';
+  });
+  document.body.style.overflow = 'hidden';
+}
+function closeQuestion() {
+  const overlay = document.getElementById('question-overlay');
+  const modal = document.getElementById('question-modal');
+  modal.style.transform = 'translateY(24px)';
+  modal.style.opacity = '0';
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    // reset form
+    document.getElementById('question-form-wrap').style.display = 'block';
+    document.getElementById('question-success').style.display = 'none';
+    document.getElementById('q-nom').value = '';
+    document.getElementById('q-email').value = '';
+    document.getElementById('q-message').value = '';
+    document.getElementById('question-alert').style.display = 'none';
+  }, 300);
+}
+async function submitQuestion() {
+  const nom = document.getElementById('q-nom').value.trim();
+  const email = document.getElementById('q-email').value.trim();
+  const message = document.getElementById('q-message').value.trim();
+  const alertEl = document.getElementById('question-alert');
+  if (!nom || !email || !message) {
+    alertEl.textContent = 'Veuillez remplir tous les champs.';
+    alertEl.style.display = 'block';
+    return;
+  }
+  alertEl.style.display = 'none';
+  const btn = document.getElementById('q-submit');
+  btn.textContent = 'Envoi en cours...';
+  btn.disabled = true;
+  try {
+    const resp = await fetch('https://formspree.io/f/xeeplanq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ nom, email, message, _subject: `[ClearChain] Question de ${nom}`, _replyto: email })
+    });
+    if (resp.ok) {
+      document.getElementById('question-form-wrap').style.display = 'none';
+      document.getElementById('question-success').style.display = 'block';
+    } else { throw new Error(); }
+  } catch {
+    alertEl.textContent = 'Une erreur est survenue. Réessayez ou écrivez à raphadarracq@gmail.com';
+    alertEl.style.display = 'block';
+    btn.textContent = 'Envoyer ma question →';
+    btn.disabled = false;
+  }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeQuestion(); });
 
 /* ── FAQ ── */
 function toggleFaq(btn) {
